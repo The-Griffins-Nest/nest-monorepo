@@ -4,10 +4,19 @@
   src: url("/CheltenhamStdBook.woff") format("woff");
 }
 
+@font-face {
+  font-family: "Publico";
+  src: url("/PublicoTextRoman.woff") format("woff");
+}
+
 .poppins {
   font-family: "Poppins", sans-serif;
 }
 
 .cheltenham {
   font-family: "Cheltenham", serif;
+}
+
+.publico {
+  font-family: "Publico", serif;
 }
