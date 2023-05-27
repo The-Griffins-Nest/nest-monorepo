@@ -2,12 +2,11 @@ import { IoAddOutline } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import TextArea from "./TextArea";
 import { DARKBACKGROUND } from "@lib/color_styles";
-
-type setElementsType = React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+import { CustomElement, SetElements } from "types/forms";
 
 interface SeparatorProps {
   index: number;
-  setElements: setElementsType;
+  setElements: SetElements;
 }
 
 function Separator({ index, setElements }: SeparatorProps) {
@@ -18,26 +17,7 @@ function Separator({ index, setElements }: SeparatorProps) {
       onClick={() => {
         console.log("index", index);
         setElements((prev) => {
-          const result = [];
-          for (let i = 0; i < prev.length + 1; i++) {
-            if (i === index) {
-              //   result.push(<TextArea key={i} />);
-              result.push(
-                <div key={i}>
-                  <div>Hello</div>
-                  {/* <TextArea></TextArea> */}
-                </div>
-              );
-            } else {
-              if (i < index) {
-                result.push(prev[i]);
-              }
-              if (i > index) {
-                result.push(prev[i - 1]);
-              }
-            }
-          }
-          return result;
+          return [];
         });
       }}
     >
@@ -47,8 +27,8 @@ function Separator({ index, setElements }: SeparatorProps) {
 }
 
 type ElementSeparatorProps = {
-  elements: React.ReactNode[];
-  setElements: setElementsType;
+  elements: CustomElement[];
+  setElements: SetElements;
 };
 
 function ElementSeparator({ elements, setElements }: ElementSeparatorProps) {
@@ -61,7 +41,7 @@ function ElementSeparator({ elements, setElements }: ElementSeparatorProps) {
     );
     result.push(
       <div id={`element-${i}`} key={`element-${i}`}>
-        {elements[i]}
+        {elements[i].element}
       </div>
     );
   }
