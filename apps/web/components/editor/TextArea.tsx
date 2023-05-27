@@ -14,11 +14,6 @@ function TextArea({ formData, setFormData, key }: FormProps<string>) {
 
   return (
     <div key={key} className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
-      {/* <input
-        placeholder="Some Text"
-        className={`${fonts.publico} w-full h-full outline-none border-none text-lg m-2
-      bg-[#00000000] dark:text-white text-[#101935] font-[500]`}
-      ></input> */}
       <TextareaAutosize
         ref={textAreaRef}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,7 +22,7 @@ function TextArea({ formData, setFormData, key }: FormProps<string>) {
         aria-label="text area"
         minRows={3}
         placeholder="Some text here!"
-        className={`${fonts.publico} w-full h-full outline-none border-none text-lg m-2  bg-[#00000000] dark:text-white text-[#101935] font-[500] resize-none`}
+        className={`${fonts.publico} w-full h-full outline-none border-none text-lg m-2 bg-[#00000000] dark:text-white text-[#101935] font-[500] resize-none`}
       />
     </div>
   );

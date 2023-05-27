@@ -1,14 +1,30 @@
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import fonts from "@styles/fonts.module.css";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { FormProps } from "types/forms";
 
 function Title({ formData, setFormData, key }: FormProps<string>) {
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      titleRef.current.innerText = formData;
+    }
+  }, []);
+
   return (
-    <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] p-2 rounded-lg">
-      <input
+    <div key={key} className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
+      <TextareaAutosize
+        ref={titleRef}
+        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+          setFormData(event.target.value);
+        }}
+        aria-label="title"
+        minRows={1}
         placeholder="Title"
-        className={`${fonts.cheltenham} w-full outline-none border-none text-4xl
-      bg-[#00000000] dark:text-white text-[#101935] font-[500] tracking-[-2px] leading-[8px]`}
-      ></input>
+        className={`${fonts.cheltenham} w-full outline-none border-none text-4xl resize-none
+        bg-[#00000000] dark:text-white text-[#101935] font-[500] tracking-[-2px]`}
+      />
     </div>
   );
 }
