@@ -24,6 +24,7 @@
     "paths": {
       "@components/*": ["components/*"],
       "@shared/*": ["shared/*"],
+      "@stores/*": ["stores/*"],
       "@styles/*": ["styles/*"],
       "@lib/*": ["lib/*"],
       "@pages/*": ["pages/*"],

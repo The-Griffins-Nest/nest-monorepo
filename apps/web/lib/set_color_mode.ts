@@ -1,7 +1,6 @@
 import { THEME_TYPES } from "@lib/constants";
-import { ThemeTypes } from "types/color_mode";
 
-export const setColorMode = (theme: ThemeTypes) => {
+export const setColorMode = (theme: THEME_TYPES) => {
   const { THEME_DARK, THEME_LIGHT } = THEME_TYPES;
   const root = window.document.documentElement;
   const isDark = theme === THEME_DARK;
