@@ -1,10 +1,12 @@
-import { SetElements } from "types/forms";
+import { SetElements, FormData } from "types/forms";
 
 export function createSetFormData(index: number, setElements: SetElements) {
-  return <T>(form_data: T) => {
+  return (form_data: FormData) => {
     setElements((prev) => {
       const new_data = [...prev];
-      new_data[index].formData = form_data;
+      if (typeof new_data[index] === typeof form_data) {
+        new_data[index].formData = form_data;
+      }
       return new_data;
     });
   };

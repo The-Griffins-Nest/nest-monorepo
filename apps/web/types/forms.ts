@@ -3,18 +3,25 @@ export type FormProps<T> = {
   setFormData: (data: T) => void;
 };
 
-export type TextFormData = {
-  text: string;
-};
+export class TextFormData {
+  type: string = "Text";
+  constructor(public text: string) {}
+}
 
-export type TitleFormData = {
-  text: string;
-};
+export class TitleFormData {
+  type: string = "Title";
+  constructor(public text: string) {}
+}
 
-export type ImageFormData = {
-  src: string;
-  alt?: string;
-};
+export class ImageFormData {
+  type: string = "Image";
+  constructor(public src: string, public alt?: string) {}
+}
+
+export class SocialFormData {
+  type: string = "Social";
+  constructor(public src: string) {}
+}
 
 export type FormData = TextFormData | TitleFormData | ImageFormData;
 
