@@ -9,26 +9,37 @@ import { createSetFormData } from "@lib/create_set_form_data";
 
 function MainPage() {
   const [elements, setElements] = useState<CustomElement[]>([]);
+
   useEffect(() => {
     setElements([
       {
         key: nanoid(),
-        formData: "",
-        element: <Title formData="" setFormData={createSetFormData(0, setElements)} />,
+        formData: {
+          text: "",
+        },
+        element: (
+          <Title
+            formData={{
+              text: "",
+            }}
+            setFormData={createSetFormData(0, setElements)}
+          />
+        ),
       },
       {
         key: nanoid(),
-        formData: "",
-        element: <TextArea formData="" setFormData={createSetFormData(1, setElements)} />,
+        formData: {
+          text: "",
+        },
+        element: <TextArea formData={{ text: "" }} setFormData={createSetFormData(1, setElements)} />,
       },
     ]);
   }, []);
 
   return (
     <div className="w-full min-h-screen pt-8">
-      <div className="flex flex-row justify-center">
-        <div className="w-1/2">
-          {JSON.stringify(elements.map((element) => element.formData))}
+      <div className="flex flex-row justify-center px-8 md:px-0">
+        <div className="w-full md:w-1/2">
           <ElementSeparator elements={elements} setElements={setElements} />
         </div>
       </div>

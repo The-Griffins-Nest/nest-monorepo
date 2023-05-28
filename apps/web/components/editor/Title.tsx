@@ -1,14 +1,14 @@
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import fonts from "@styles/fonts.module.css";
 import { ChangeEvent, useEffect, useRef } from "react";
-import { FormProps } from "types/forms";
+import { FormProps, TitleFormData } from "types/forms";
 
-function Title({ formData, setFormData }: FormProps<string>) {
+function Title({ formData, setFormData }: FormProps<TitleFormData>) {
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (titleRef.current) {
-      titleRef.current.innerText = formData;
+      titleRef.current.innerText = formData.text;
     }
   }, []);
 
@@ -17,7 +17,7 @@ function Title({ formData, setFormData }: FormProps<string>) {
       <TextareaAutosize
         ref={titleRef}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          setFormData(event.target.value);
+          setFormData({ text: event.target.value });
         }}
         aria-label="title"
         minRows={1}
