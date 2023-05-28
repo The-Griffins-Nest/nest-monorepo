@@ -3,19 +3,14 @@ import fonts from "@styles/fonts.module.css";
 import React, { ChangeEvent, useEffect, useRef } from "react";
 import { FormProps } from "types/forms";
 
-function TextArea({ formData, setFormData, key }: FormProps<string>) {
+function TextArea({ formData, setFormData }: FormProps<string>) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.innerText = formData;
-    }
-  }, []);
-
   return (
-    <div key={key} className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
+    <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
       <TextareaAutosize
         ref={textAreaRef}
+        defaultValue={formData}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
           setFormData(event.target.value);
         }}

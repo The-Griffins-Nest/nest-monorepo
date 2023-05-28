@@ -3,7 +3,7 @@ import fonts from "@styles/fonts.module.css";
 import { ChangeEvent, useEffect, useRef } from "react";
 import { FormProps } from "types/forms";
 
-function Title({ formData, setFormData, key }: FormProps<string>) {
+function Title({ formData, setFormData }: FormProps<string>) {
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function Title({ formData, setFormData, key }: FormProps<string>) {
   }, []);
 
   return (
-    <div key={key} className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
+    <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
       <TextareaAutosize
         ref={titleRef}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
