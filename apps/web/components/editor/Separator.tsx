@@ -60,7 +60,7 @@ function ElementSeparator({ elements, setElements }: ElementSeparatorProps) {
       element: (
         <>
           <div className="flex-1">{elements[i].element}</div>
-          <div className="group-hover:block group-focus:block hidden">
+          <div className="group-hover:block group-focus:block hidden transition-all">
             <ChooseItemMenu index={i} type={elements[i].formData.type} setElements={setElements} />
           </div>
         </>

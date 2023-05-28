@@ -12,7 +12,7 @@ type MenuProps = {
   setElements: SetElements;
 };
 
-export default function BasicMenu({ index, type, setElements }: MenuProps) {
+export default function ChooseItemMenu({ index, type, setElements }: MenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
