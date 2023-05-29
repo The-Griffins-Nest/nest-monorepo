@@ -21,7 +21,7 @@ import Theme from "@lib/lexical_theme";
 import ToolbarPlugin from "@shared/form/plugins/ToolbarPlugin";
 import { EditorState } from "lexical";
 
-function TextArea({ formData, setFormData }: FormProps<TextFormData>) {
+function TextArea({ setFormData }: FormProps<TextFormData>) {
   const editorConfig = {
     namespace: "MyEditor",
     theme: Theme,
@@ -36,19 +36,9 @@ function TextArea({ formData, setFormData }: FormProps<TextFormData>) {
   }, []);
 
   return (
-    <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
-      {/* <TextareaAutosize
-        defaultValue={formData.text}
-        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          setFormData({ type: "Text", text: event.target.value });
-        }}
-        aria-label="text area"
-        minRows={3}
-        placeholder="Some text here!"
-        className={`${fonts.publico} w-full h-full outline-none border-none text-lg m-2 bg-[#00000000] dark:text-white text-[#101935] font-[500] resize-none`}
-      /> */}
+    <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg relative group">
       <LexicalComposer initialConfig={editorConfig}>
-        <div className="hidden lg:block">
+        <div className="absolute hidden group-hover:block group-focus:block top-[-50px]">
           <ToolbarPlugin />
         </div>
         <div

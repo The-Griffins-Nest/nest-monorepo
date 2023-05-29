@@ -6,6 +6,7 @@ import TextArea from "@components/editor/TextArea";
 import { CustomElement, TextFormData, TitleFormData } from "types/forms";
 import { nanoid } from "nanoid";
 import { createSetFormData } from "@lib/create_set_form_data";
+import Header from "@components/editor/Header";
 
 function MainPage() {
   const [elements, setElements] = useState<CustomElement[]>([]);
@@ -29,6 +30,7 @@ function MainPage() {
 
   return (
     <div className="w-full min-h-screen pt-8">
+      <Header></Header>
       <div className="flex flex-row justify-center px-8 md:px-0">
         <div className="w-full md:w-1/2">
           <ElementSeparator elements={elements} setElements={setElements} />
