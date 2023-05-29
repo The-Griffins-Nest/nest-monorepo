@@ -1,22 +1,25 @@
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import LexicalAutoLinkPlugin from "@shared/form/plugins/LexicalAutoLinkPlugin";
-import ToolbarPlugin from "@shared/form/plugins/ToolbarPlugin";
-import CodeHighlightPlugin from "@shared/form/plugins/CodeHighlightPlugin";
-import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
-import { ListItemNode, ListNode } from "@lexical/list";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { FormProps, TextFormData } from "types/forms";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
+import { ListItemNode, ListNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
+import CodeHighlightPlugin from "@shared/form/plugins/CodeHighlightPlugin";
 import fonts from "@styles/fonts.module.css";
-import React, { useRef } from "react";
+import LexicalAutoLinkPlugin from "@shared/form/plugins/LexicalAutoLinkPlugin";
+import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
+import React, { useCallback } from "react";
 import Theme from "@lib/lexical_theme";
-import { FormProps, TextFormData } from "types/forms";
+import ToolbarPlugin from "@shared/form/plugins/ToolbarPlugin";
+import { EditorState } from "lexical";
 
 function TextArea({ formData, setFormData }: FormProps<TextFormData>) {
   const editorConfig = {
@@ -27,6 +30,10 @@ function TextArea({ formData, setFormData }: FormProps<TextFormData>) {
     },
     nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, AutoLinkNode, LinkNode],
   };
+
+  const onChange = useCallback((editorState: EditorState) => {
+    setFormData({ type: "Text", text: JSON.stringify(editorState.toJSON()) });
+  }, []);
 
   return (
     <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">
@@ -49,24 +56,23 @@ function TextArea({ formData, setFormData }: FormProps<TextFormData>) {
         >
           <RichTextPlugin
             contentEditable={
-              <ContentEditable
-                id="chatbox"
-                className="relative resize-none rounded-2xl outline-none py-[0.8rem] px-5"
-              />
+              <ContentEditable className="relative resize-none rounded-2xl outline-none py-[0.8rem] px-5" />
             }
             placeholder={
               <div className="absolute left-5 bottom-[12px] text-[#a5a5a5] overflow-hidden text-ellipsis truncate font-[15px] select-none pointer-events-none">
                 Some Text Here!
               </div>
             }
+            ErrorBoundary={LexicalErrorBoundary}
           />
         </div>
-        <HistoryPlugin />
-        <ListPlugin />
-        <LinkPlugin />
-        <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-        <LexicalAutoLinkPlugin />
         <CodeHighlightPlugin />
+        <HistoryPlugin />
+        <LexicalAutoLinkPlugin />
+        <LinkPlugin />
+        <ListPlugin />
+        <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+        <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>
   );
