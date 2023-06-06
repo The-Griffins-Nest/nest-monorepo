@@ -1,7 +1,6 @@
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { FormProps, TextFormData } from "types/forms";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -20,8 +19,9 @@ import React, { useCallback } from "react";
 import Theme from "@lib/lexical_theme";
 import ToolbarPlugin from "@shared/form/plugins/ToolbarPlugin";
 import { EditorState } from "lexical";
+import useElements from "@stores/useElements";
 
-function TextArea({ setFormData }: FormProps<TextFormData>) {
+function TextArea({index} : {index: number}) {
   const editorConfig = {
     namespace: "MyEditor",
     theme: Theme,
@@ -30,9 +30,9 @@ function TextArea({ setFormData }: FormProps<TextFormData>) {
     },
     nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, AutoLinkNode, LinkNode],
   };
-
+  const setFormData = useElements((state) => state.setFormData);
   const onChange = useCallback((editorState: EditorState) => {
-    setFormData({ type: "Text", text: JSON.stringify(editorState.toJSON()) });
+    setFormData(index, { type: "Text", text: JSON.stringify(editorState.toJSON()) });
   }, []);
 
   return (

@@ -13,17 +13,16 @@ function MainPage() {
 
   useEffect(() => {
     const title = new TitleFormData("");
-    const text = new TextFormData("");
     setElements([
       {
         key: nanoid(),
         formData: title,
-        element: <Title formData={title} setFormData={createSetFormData(0, setElements)} />,
+        element: <Title index={0} formData={title}/>,
       },
       {
         key: nanoid(),
         formData: new TextFormData(""),
-        element: <TextArea formData={text} setFormData={createSetFormData(1, setElements)} />,
+        element: <TextArea index={1} />,
       },
     ]);
   }, []);

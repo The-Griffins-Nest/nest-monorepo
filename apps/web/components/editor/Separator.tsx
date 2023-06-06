@@ -8,6 +8,7 @@ import React from "react";
 import { nanoid } from "nanoid";
 import ChooseItemMenu from "./ChooseItemMenu";
 import CreateElement from "@lib/create_element";
+import useElements from "@stores/useElements";
 
 interface SeparatorProps {
   index: number;
@@ -15,6 +16,7 @@ interface SeparatorProps {
 
 function Separator({ index }: SeparatorProps) {
   const createElement = CreateElement();
+  const setElements = useElements((state) => state.setElements);
 
   const handleNew = () => {
     setElements((prev) => {
@@ -28,7 +30,7 @@ function Separator({ index }: SeparatorProps) {
           new_data.push({
             key: id,
             formData: formData,
-            element: <TextArea formData={formData} />,
+            element: <TextArea index={index} />,
           });
         } else {
           new_data.push(createElement({ index: i, formElement: prev[i - 1] }));

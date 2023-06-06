@@ -1,6 +1,6 @@
 export type FormProps<T> = {
+  index: number
   formData: T;
-  setFormData: (data: T) => void;
 };
 
 export class TextFormData {

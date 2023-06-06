@@ -1,13 +1,9 @@
-import { SetElements, FormData } from "types/forms";
+import useElements from "@stores/useElements";
+import { FormData } from "types/forms";
 
-export function createSetFormData(index: number, setElements: SetElements) {
+export function createSetFormData(index: number) {
+  const setFormData = useElements((state) => state.setFormData);
   return (form_data: FormData) => {
-    setElements((prev) => {
-      const new_data = [...prev];
-      if (typeof new_data[index] === typeof form_data) {
-        new_data[index].formData = form_data;
-      }
-      return new_data;
-    });
+    setFormData(index, form_data);
   };
 }

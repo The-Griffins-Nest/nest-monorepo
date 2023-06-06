@@ -12,6 +12,7 @@ const useElements = create(
   persist<ElementStore>(
     (set) => ({
       elements: [],
+      // setElements should take a function that takes the current state and returns the new state
       setElements: (elements) => set({ elements }),
       setFormData: (index, form_data) =>
         set((state) => {
