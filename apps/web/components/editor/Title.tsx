@@ -16,7 +16,7 @@ function Title({ index, formData }: FormProps<TitleFormData>) {
         minRows={1}
         placeholder="Title"
         className={`${fonts.cheltenham} w-full outline-none border-none text-4xl resize-none
-        bg-[#00000000] dark:text-white text-[#101935] font-[500] tracking-[-2px] m-2`}
+        bg-[#00000000] dark:text-white text-[#101935] font-[500] tracking-[-1px] m-2`}
       />
     </div>
   );
