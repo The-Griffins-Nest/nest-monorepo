@@ -11,11 +11,10 @@ import CreateElement from "@lib/create_element";
 
 interface SeparatorProps {
   index: number;
-  setElements: SetElements;
 }
 
-function Separator({ index, setElements }: SeparatorProps) {
-  const createElement = CreateElement(setElements);
+function Separator({ index }: SeparatorProps) {
+  const createElement = CreateElement();
 
   const handleNew = () => {
     setElements((prev) => {
@@ -29,7 +28,7 @@ function Separator({ index, setElements }: SeparatorProps) {
           new_data.push({
             key: id,
             formData: formData,
-            element: <TextArea formData={formData} setFormData={createSetFormData(i, setElements)} />,
+            element: <TextArea formData={formData} />,
           });
         } else {
           new_data.push(createElement({ index: i, formElement: prev[i - 1] }));
