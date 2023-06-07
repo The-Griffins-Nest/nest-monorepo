@@ -3,13 +3,15 @@ import { useState } from "react";
 import ElementSeparator from "@components/editor/Separator";
 import Title from "@components/editor/Title";
 import TextArea from "@components/editor/TextArea";
-import { CustomElement, TextFormData, TitleFormData } from "types/forms";
+import { TextFormData, TitleFormData } from "types/forms";
 import { nanoid } from "nanoid";
-import { createSetFormData } from "@lib/create_set_form_data";
 import Header from "@components/editor/Header";
+import useElements from "@stores/useElements";
 
 function MainPage() {
-  const [elements, setElements] = useState<CustomElement[]>([]);
+  const { setElements } = useElements((state) => ({
+    setElements: state.setElements,
+  }));
 
   useEffect(() => {
     const title = new TitleFormData("");
@@ -17,7 +19,7 @@ function MainPage() {
       {
         key: nanoid(),
         formData: title,
-        element: <Title index={0} formData={title}/>,
+        element: <Title index={0} formData={title} />,
       },
       {
         key: nanoid(),
@@ -32,7 +34,7 @@ function MainPage() {
       <Header></Header>
       <div className="flex flex-row justify-center px-8 md:px-0">
         <div className="w-full md:w-1/2">
-          <ElementSeparator elements={elements} setElements={setElements} />
+          <ElementSeparator />
         </div>
       </div>
     </div>

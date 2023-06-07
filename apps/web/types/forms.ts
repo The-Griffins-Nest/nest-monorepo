@@ -1,5 +1,5 @@
 export type FormProps<T> = {
-  index: number
+  index: number;
   formData: T;
 };
 
@@ -25,5 +25,8 @@ export class SocialFormData {
 
 export type FormData = TextFormData | TitleFormData | ImageFormData;
 
-export type CustomElement = { key: string; formData: FormData; element: JSX.Element };
-export type SetElements = React.Dispatch<React.SetStateAction<CustomElement[]>>;
+export type CustomElement = {
+  key: string;
+  formData: FormData;
+  element: JSX.Element;
+};
