@@ -7,12 +7,10 @@ import { TextFormData, TitleFormData } from "types/forms";
 import { nanoid } from "nanoid";
 import Header from "@components/editor/Header";
 import useElements from "@stores/useElements";
+import { safeStringify } from "@lib/debug/safeStringify";
 
 function MainPage() {
-  const { setElements } = useElements((state) => ({
-    setElements: state.setElements,
-  }));
-
+  const setElements = useElements((state) => state.setElements);
   useEffect(() => {
     const title = new TitleFormData("");
     setElements([

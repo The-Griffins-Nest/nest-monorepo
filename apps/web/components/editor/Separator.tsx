@@ -5,6 +5,9 @@ import React from "react";
 import { nanoid } from "nanoid";
 import ChooseItemMenu from "./ChooseItemMenu";
 import useElements from "@stores/useElements";
+import { safeStringify } from "@lib/debug/safeStringify";
+import CreateElement from "@lib/create_element";
+import ElementFromType from "@lib/element_from_type";
 
 interface SeparatorProps {
   index: number;
@@ -12,13 +15,12 @@ interface SeparatorProps {
 
 function Separator({ index }: SeparatorProps) {
   const insertElement = useElements((state) => state.insertElement);
-
-  const handleNew = () => {
-    insertElement(index);
-  };
-
   return (
-    <Button variant="text" className="h-4 w-full" onClick={handleNew}>
+    <Button
+      variant="text"
+      className="h-4 w-full"
+      onClick={() => insertElement(index)}
+    >
       <IoAddOutline
         className={`text-[${DARKBACKGROUND}] dark:text-[#FFFFFF]`}
       />
@@ -35,7 +37,9 @@ function ElementSeparator() {
       key: elements[i].key,
       element: (
         <>
-          <div className="flex-1">{elements[i].element}</div>
+          <div className="flex-1">
+            {ElementFromType(elements[i].formData.type, i).element}
+          </div>
           <div className="group-hover:block group-focus:block hidden transition-all absolute right-0">
             <ChooseItemMenu index={i} type={elements[i].formData.type} />
           </div>
