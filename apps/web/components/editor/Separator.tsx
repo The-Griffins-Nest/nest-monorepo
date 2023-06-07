@@ -1,13 +1,11 @@
-import { IoAddOutline } from "react-icons/io5";
-import Button from "@mui/material/Button";
 import { DARKBACKGROUND } from "@lib/color_styles";
-import React from "react";
+import { ElementFromType } from "@lib/element_from_type";
+import { IoAddOutline } from "react-icons/io5";
 import { nanoid } from "nanoid";
+import Button from "@mui/material/Button";
 import ChooseItemMenu from "./ChooseItemMenu";
+import React from "react";
 import useElements from "@stores/useElements";
-import { safeStringify } from "@lib/debug/safeStringify";
-import CreateElement from "@lib/create_element";
-import ElementFromType from "@lib/element_from_type";
 
 interface SeparatorProps {
   index: number;
@@ -38,7 +36,7 @@ function ElementSeparator() {
       element: (
         <>
           <div className="flex-1">
-            {ElementFromType(elements[i].formData.type, i).element}
+            {ElementFromType(elements[i].formData.type, i)}
           </div>
           <div className="group-hover:block group-focus:block hidden transition-all absolute right-0">
             <ChooseItemMenu index={i} type={elements[i].formData.type} />

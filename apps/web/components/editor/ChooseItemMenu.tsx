@@ -1,9 +1,9 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { FORM_TYPES } from "@lib/constants";
 import useElements from "@stores/useElements";
+import { useState } from "react";
 
 type MenuProps = {
   index: number;
@@ -11,8 +11,8 @@ type MenuProps = {
 };
 
 export default function ChooseItemMenu({ index, type }: MenuProps) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { replaceElement, setElements } = useElements();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { replaceElement } = useElements();
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -28,5 +28,4 @@ export type FormData = TextFormData | TitleFormData | ImageFormData;
 export type CustomElement = {
   key: string;
   formData: FormData;
-  element: JSX.Element;
 };

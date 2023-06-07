@@ -1,7 +1,8 @@
-import { CustomElement } from "types/forms";
 import { create } from "zustand";
+import { CustomElement, TextFormData } from "types/forms";
+import { DataFromType } from "@lib/data_from_type";
+import { nanoid } from "nanoid";
 import { persist } from "zustand/middleware";
-import CreateElement from "@lib/create_element";
 
 type ElementStore = {
   elements: CustomElement[];
@@ -17,26 +18,27 @@ const useElements = create(
       elements: [],
       insertElement: (index) =>
         set(({ elements }) => {
-          console.log(elements);
           const new_data: CustomElement[] = [];
           for (let i = 0; i < elements.length + 1; i++) {
             if (i < index) {
-              new_data.push(
-                CreateElement({ index: i, formElement: elements[i] })
-              );
+              const { key, formData } = elements[i];
+              new_data.push({ key, formData });
             } else if (i === index) {
-              new_data.push(CreateElement({ index: i, type: "Text" }));
+              const key = nanoid();
+              new_data.push({
+                key,
+                formData: new TextFormData(""),
+              });
             } else {
-              new_data.push(
-                CreateElement({ index: i, formElement: elements[i - 1] })
-              );
+              const { key, formData } = elements[i - 1];
+              new_data.push({ key, formData });
             }
           }
           return { elements: new_data };
         }),
       replaceElement: (index, type) =>
         set(({ elements }) => {
-          const newElem = CreateElement({ index, type });
+          const newElem = DataFromType(type);
           const new_data = [...elements];
           new_data[index] = newElem;
           return { elements: new_data };

@@ -1,28 +1,21 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 import ElementSeparator from "@components/editor/Separator";
-import Title from "@components/editor/Title";
-import TextArea from "@components/editor/TextArea";
 import { TextFormData, TitleFormData } from "types/forms";
 import { nanoid } from "nanoid";
 import Header from "@components/editor/Header";
 import useElements from "@stores/useElements";
-import { safeStringify } from "@lib/debug/safeStringify";
 
 function MainPage() {
   const setElements = useElements((state) => state.setElements);
   useEffect(() => {
-    const title = new TitleFormData("");
     setElements([
       {
         key: nanoid(),
-        formData: title,
-        element: <Title index={0} formData={title} />,
+        formData: new TitleFormData(""),
       },
       {
         key: nanoid(),
         formData: new TextFormData(""),
-        element: <TextArea index={1} />,
       },
     ]);
   }, []);
