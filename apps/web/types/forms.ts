@@ -1,8 +1,3 @@
-export type FormProps<T> = {
-  index: number;
-  formData: T;
-};
-
 export class TextFormData {
   type: string = "Text";
   constructor(public text: string) {}

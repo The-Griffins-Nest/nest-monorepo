@@ -1,5 +1,3 @@
-import { FormProps, ImageFormData } from "types/forms";
-
-export default function Image({ index, formData }: FormProps<ImageFormData>) {
+export default function Image({ index }: { index: number }) {
   return <div>Image</div>;
 }

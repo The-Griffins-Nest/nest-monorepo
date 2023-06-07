@@ -2,14 +2,10 @@ import { TextField } from "@mui/material";
 import useElements from "@stores/useElements";
 import fonts from "@styles/fonts.module.css";
 import { useState } from "react";
-import { FormProps, SocialFormData } from "types/forms";
 import Embed from "react-embed";
 
-export default function SocialEmbed({
-  index,
-  formData,
-}: FormProps<SocialFormData>) {
-  const [src, setSrc] = useState(formData.src);
+export default function SocialEmbed({ index }: { index: number }) {
+  const [src, setSrc] = useState("");
   const setFormData = useElements((state) => state.setFormData);
   return (
     <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg">

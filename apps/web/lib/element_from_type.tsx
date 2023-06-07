@@ -1,4 +1,3 @@
-import { ImageFormData, SocialFormData, TitleFormData } from "types/forms";
 import Image from "@components/editor/Image";
 import SocialEmbed from "@components/editor/SocialEmbed";
 import TextArea from "@components/editor/TextArea";
@@ -9,14 +8,11 @@ function ElementFromType(type: string, index: number): JSX.Element {
     case "Text":
       return <TextArea index={index} />;
     case "Title":
-      const titleFormData = new TitleFormData("");
-      return <Title index={index} formData={titleFormData} />;
+      return <Title index={index} />;
     case "Image":
-      const imageFormData = new ImageFormData("");
-      return <Image index={index} formData={imageFormData} />;
+      return <Image index={index} />;
     case "Social":
-      const socialFormData = new SocialFormData("");
-      return <SocialEmbed index={index} formData={socialFormData} />;
+      return <SocialEmbed index={index} />;
     default:
       return <TextArea index={index} />;
   }
