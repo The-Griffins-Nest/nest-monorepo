@@ -1,19 +1,18 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { FORM_TYPES } from "@lib/constants";
-import { SetElements } from "types/forms";
-import CreateElement from "@lib/create_element";
+import useElements from "@stores/useElements";
+import { useState } from "react";
 
 type MenuProps = {
   index: number;
   type: string;
-  setElements: SetElements;
 };
 
-export default function ChooseItemMenu({ index, type, setElements }: MenuProps) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+export default function ChooseItemMenu({ index, type }: MenuProps) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { replaceElement } = useElements();
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,19 +20,19 @@ export default function ChooseItemMenu({ index, type, setElements }: MenuProps) 
   };
   const handleClose = (new_type?: string) => {
     if (new_type && new_type !== type) {
-      const newElem = CreateElement(setElements)({ index, type: new_type });
-      setElements((prev) => {
-        const new_data = [...prev];
-        new_data[index] = newElem;
-        return new_data;
-      });
+      replaceElement(index, new_type);
     }
     setAnchorEl(null);
   };
 
   return (
     <div>
-      <Button id="basic-button" aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleClick}>
+      <Button
+        id="basic-button"
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
         Change Type: {type}
       </Button>
       <Menu

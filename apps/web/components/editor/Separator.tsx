@@ -1,73 +1,54 @@
-import { IoAddOutline } from "react-icons/io5";
-import Button from "@mui/material/Button";
-import TextArea from "./TextArea";
 import { DARKBACKGROUND } from "@lib/color_styles";
-import { CustomElement, SetElements, TitleFormData } from "types/forms";
-import { createSetFormData } from "@lib/create_set_form_data";
-import React from "react";
+import { ElementFromType } from "@lib/element_from_type";
+import { IoAddOutline } from "react-icons/io5";
 import { nanoid } from "nanoid";
+import Button from "@mui/material/Button";
 import ChooseItemMenu from "./ChooseItemMenu";
-import CreateElement from "@lib/create_element";
+import React from "react";
+import useElements from "@stores/useElements";
 
 interface SeparatorProps {
   index: number;
-  setElements: SetElements;
 }
 
-function Separator({ index, setElements }: SeparatorProps) {
-  const createElement = CreateElement(setElements);
-
-  const handleNew = () => {
-    setElements((prev) => {
-      const new_data: CustomElement[] = [];
-      for (let i = 0; i < prev.length + 1; i++) {
-        if (i < index) {
-          new_data.push(createElement({ index: i, formElement: prev[i] }));
-        } else if (i === index) {
-          const id = nanoid();
-          const formData = new TitleFormData("");
-          new_data.push({
-            key: id,
-            formData: formData,
-            element: <TextArea formData={formData} setFormData={createSetFormData(i, setElements)} />,
-          });
-        } else {
-          new_data.push(createElement({ index: i, formElement: prev[i - 1] }));
-        }
-      }
-      return new_data;
-    });
-  };
-
+function Separator({ index }: SeparatorProps) {
+  const insertElement = useElements((state) => state.insertElement);
   return (
-    <Button variant="text" className="h-4 w-full" onClick={handleNew}>
-      <IoAddOutline className={`text-[${DARKBACKGROUND}] dark:text-[#FFFFFF]`} />
+    <Button
+      variant="text"
+      className="h-4 w-full"
+      onClick={() => insertElement(index)}
+    >
+      <IoAddOutline
+        className={`text-[${DARKBACKGROUND}] dark:text-[#FFFFFF]`}
+      />
     </Button>
   );
 }
 
-type ElementSeparatorProps = {
-  elements: CustomElement[];
-  setElements: SetElements;
-};
-
-function ElementSeparator({ elements, setElements }: ElementSeparatorProps) {
+function ElementSeparator() {
+  const elements = useElements((state) => state.elements);
   const result = [];
   for (let i = 0; i < elements.length; i++) {
-    result.push({ key: nanoid(), element: <Separator index={i} setElements={setElements} /> });
+    result.push({ key: nanoid(), element: <Separator index={i} /> });
     result.push({
       key: elements[i].key,
       element: (
         <>
-          <div className="flex-1">{elements[i].element}</div>
+          <div className="flex-1">
+            {ElementFromType(elements[i].formData.type, i)}
+          </div>
           <div className="group-hover:block group-focus:block hidden transition-all absolute right-0">
-            <ChooseItemMenu index={i} type={elements[i].formData.type} setElements={setElements} />
+            <ChooseItemMenu index={i} type={elements[i].formData.type} />
           </div>
         </>
       ),
     });
   }
-  result.push({ key: nanoid(), element: <Separator index={elements.length} setElements={setElements} /> });
+  result.push({
+    key: nanoid(),
+    element: <Separator index={elements.length} />,
+  });
   return (
     <div className="flex flex-col gap-2">
       {result.map(({ key, element }) => (

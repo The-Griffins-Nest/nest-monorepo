@@ -1,7 +1,6 @@
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { FormProps, TextFormData } from "types/forms";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -20,27 +19,57 @@ import React, { useCallback } from "react";
 import Theme from "@lib/lexical_theme";
 import ToolbarPlugin from "@shared/form/plugins/ToolbarPlugin";
 import { EditorState } from "lexical";
+import useElements from "@stores/useElements";
+import { useBoolean } from "usehooks-ts";
 
-function TextArea({ setFormData }: FormProps<TextFormData>) {
+function TextArea({ index }: { index: number }) {
   const editorConfig = {
     namespace: "MyEditor",
     theme: Theme,
     onError: (err: any) => {
       console.log(err);
     },
-    nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, AutoLinkNode, LinkNode],
+    nodes: [
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      AutoLinkNode,
+      LinkNode,
+    ],
   };
-
+  const setFormData = useElements((state) => state.setFormData);
   const onChange = useCallback((editorState: EditorState) => {
-    setFormData({ type: "Text", text: JSON.stringify(editorState.toJSON()) });
+    setFormData(index, {
+      type: "Text",
+      text: JSON.stringify(editorState.toJSON()),
+    });
   }, []);
+  const {
+    value: toolbarShown,
+    setTrue: showToolbar,
+    setFalse: hideToolbar,
+  } = useBoolean(false);
 
   return (
-    <div className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg relative group">
+    <div
+      className="bg-[#00000000] dark:hover:bg-[#00000024] hover:bg-[#00000008] rounded-lg relative"
+      onMouseEnter={showToolbar}
+      onMouseLeave={hideToolbar}
+    >
       <LexicalComposer initialConfig={editorConfig}>
-        <div className="absolute hidden group-hover:block group-focus:block top-[-50px]">
+        <div
+          className={`absolute top-[-30px] ${
+            toolbarShown ? "opacity-100" : "opacity-0"
+          } transition-opacity duration-200`}
+          onMouseEnter={showToolbar}
+          onMouseLeave={hideToolbar}
+        >
           <ToolbarPlugin />
         </div>
+
         <div
           className={`w-full relative ${fonts.publico} text-lg bg-[#00000000] dark:text-white text-[#101935] font-[500] `}
         >
